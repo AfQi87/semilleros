@@ -1,0 +1,97 @@
+<div class="card col-12 mt-3">
+  <p-table #myTable [value]="users" [tableStyle]="{ 'min-width': '100%' }" dataKey="id" [rows]="10"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+    [globalFilterFields]="['usuario.nombre', 'usuario.identificacion', 'usuario.correo', 'usuario.genero.description', 'usuario.tipo.descripcion', 'usuario.estado.descripcion']"
+    responsiveLayout="stack">
+
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-7">
+          <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="myTable.filterGlobal($event.target.value, 'contains')"
+              placeholder="Buscar..." />
+          </span>
+        </div>
+        <div class="col-5">
+          <!-- <p-button label="Agregar" (click)="onAdd()"></p-button> -->
+          <p-dropdown [options]="lists"  [(ngModel)]="selected" optionLabel="name" [showClear]="true"
+            placeholder="Agregar Ususario" (onChange)="onChange($event)" style="
+            float: right">
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2" *ngIf="selected">
+                <div>{{ selected.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-list pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <div>{{ list.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+    </ng-template>
+
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nombre" style="width:25%">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+        <th pSortableColumn="identificacion" style="width:25%">Identificación <p-sortIcon
+            field="identificacion"></p-sortIcon></th>
+        <th pSortableColumn="correo" style="width:25%">Correo <p-sortIcon field="correo"></p-sortIcon></th>
+        <th pSortableColumn="genero" style="width:25%">Genero <p-sortIcon field="genero"></p-sortIcon></th>
+        <th pSortableColumn="tipo" style="width:25%">Tipo <p-sortIcon field="tipo"></p-sortIcon></th>
+        <th pSortableColumn="estado" style="width:25%">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+        <th>Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{ user.usuario.nombre }}</td>
+        <td>{{ user.usuario.identificacion }}</td>
+        <td>{{ user.usuario.correo }}</td>
+        <td>{{ user.usuario.genero.description }}</td>
+        <td>{{ user.usuario.tipo.descripcion }}</td>
+        <td>{{ user.usuario.estado.descripcion }}</td>
+        <td>
+          <div class="justify-alignment">
+            <button class="btn btn-primary btn-table-small ml-1 btn-flex btn-tam" type="button"
+              (click)="viewItem(user)"> <i class="fas fa-eye icon-position"></i> </button>
+            <button class="btn btn-warning btn-table-small ml-1 btn-flex btn-tam" type="button"
+              (click)="editItem(user)"> <i class="fas fa-pen icon-position" style="right: 8px;"></i> </button>
+            <button class="btn btn-danger btn-table-small ml-1 btn-flex btn-tam" type="button"
+              (click)="deleteItem(user)"> <i class="fas fa-trash icon-position" style="right: 7px;"></i> </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr c>
+        <td [attr.colspan]="7">Sin registros</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-toast position="bottom-center" key="confirm"  [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="flex flex-column" style="flex: 1">
+          <div class="text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h5>Desea Activar/desactivar el usuario</h5>
+          </div>
+          <div class="grid p-fluid row">
+              <div class="col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+              </div>
+              <div class="col-6">
+                  <button type="button" pButton (click)="onReject()" label="No" class="p-button-danger"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+  </p-toast>
+  <!-- <button type="button" pButton pRipple (click)="showConfirm()" label="Confirm"></button> -->

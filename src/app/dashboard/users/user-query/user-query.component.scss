@@ -1,0 +1,19 @@
+.justify-alignment {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.btn-tam {
+  height: 30px;
+  width: 30px;
+  margin-left: 5px;
+}
+
+.icon-position {
+  position: relative;
+  bottom: 5px;
+  right: 10px;
+  color: #fff;
+}

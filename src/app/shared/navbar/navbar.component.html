@@ -1,0 +1,24 @@
+<!--start header -->
+<header>
+	<div class="topbar d-flex align-items-center">
+		<nav class="navbar navbar-expand">
+			<div class="mobile-toggle-menu"><i (click)="toggleSidebar()" class='bx bx-menu'></i>
+			</div>
+			<div class="top-menu ms-auto">
+				<img src="assets/images/gallery/udenar.png" class="icon-img" height="50" alt="user avatar">
+			</div>
+			<div class="user-box dropdown">
+				<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+					
+				</a>
+				<ul class="dropdown-menu dropdown-menu-end">
+					<!-- <li><a class="dropdown-item"><i class="bx bx-user"></i><span>Perfil</span></a> -->
+					<li><a class="dropdown-item" (click)="exit()"><i class='bx bx-log-out-circle'></i><span>Cerrar Sesión</span></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</header>
+<!--end header -->

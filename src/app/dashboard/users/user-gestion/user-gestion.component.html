@@ -1,0 +1,209 @@
+<div>
+  <div>
+    <div class="card-body">
+      <form [formGroup]="user" (submit)="save()">
+        <div class="mt-4">
+          <h4>{{title}}</h4>
+        </div>
+        <div class="row mt-4">
+          <div class="mb-3 col-6">
+            <label class="form-label">Identificación</label>
+            <input [class.is-invalid]="user.get('identificacion').invalid && user.get('identificacion').touched"
+              type="text" class="form-control" formControlName="identificacion" id="identificacion" placeholder="Ingrese identificación">
+            <span class="error-msg"
+              *ngIf="user.controls['identificacion'].invalid && user.controls['identificacion'].touched">
+              Identificación es requerida.
+            </span>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre" id="nombre"
+              [class.is-invalid]="user.get('nombre').invalid && user.get('nombre').touched" placeholder="Ingrese Nombre">
+            <div class="error-msg" *ngIf="user.controls['nombre'].invalid && user.controls['nombre'].touched">
+              <div *ngIf="user.controls['nombre'].errors.required">
+                Nombre es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Fecha Nacimiento</label>
+            <input type="date" class="form-control" formControlName="fecha_nacimiento" id="fecha_nacimiento"
+              [class.is-invalid]="user.get('fecha_nacimiento').invalid && user.get('fecha_nacimiento').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['fecha_nacimiento'].invalid && user.controls['fecha_nacimiento'].touched">
+              <div *ngIf="user.controls['fecha_nacimiento'].errors.required">
+                Fecha de nacimiento es requerida
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Género</label>
+            <div>
+              <div>
+                <p-dropdown [options]="lists" [(ngModel)]="selected" optionLabel="name" [showClear]="true"
+                  placeholder="Seleccionar género" formControlName="genero" id="genero"
+                  style="width: 100%; display: grid;"
+                  [class.is-invalid]="user.get('genero').invalid && user.get('genero').touched">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2" *ngIf="selected">
+                      <div>{{ selected.name }}</div>
+                    </div>
+                  </ng-template>
+                  <ng-template let-list pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                      <div>{{ list.name }}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+                <div class="error-msg" *ngIf="user.controls['genero'].invalid && user.controls['genero'].touched">
+                  <div *ngIf="user.controls['genero'].errors.required">
+                    Género es requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control"
+              [class.is-invalid]="user.get('correo').invalid && user.get('correo').touched" formControlName="correo"
+              id="correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Ingrese correo">
+            <div class="error-msg" *ngIf="user.controls['correo'].invalid && user.controls['correo'].touched">
+              <div *ngIf="user.controls['correo'].errors?.required">
+                Correo es requerido.
+              </div>
+              <span *ngIf="user.controls['correo'].errors?.pattern" class="text-danger">EL formato del
+                correo no es valido</span>
+            </div>
+          </div>
+
+
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Teléfono</label>
+            <input type="text" class="form-control" formControlName="telefono" id="telefono"
+              [class.is-invalid]="user.get('telefono').invalid && user.get('telefono').touched" placeholder="Ingrese teléfono">
+            <div class="error-msg" *ngIf="user.controls['telefono'].invalid && user.controls['telefono'].touched">
+              <div *ngIf="user.controls['telefono'].errors.required">
+                Teléfono es requerido
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" formControlName="direccion" id="direccion"
+              [class.is-invalid]="user.get('direccion').invalid && user.get('direccion').touched" placeholder="Ingrese dirección">
+            <div class="error-msg" *ngIf="user.controls['direccion'].invalid && user.controls['direccion'].touched">
+              <div *ngIf="user.controls['direccion'].errors.required">
+                Dirección es requerida
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Estado</label>
+            <div>
+              <div>
+                <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
+                  formControlName="estado" id="estado"></p-selectButton>
+              </div>
+              <div class="error-msg" *ngIf="user.controls['estado'].invalid && user.controls['estado'].touched">
+                <div *ngIf="user.controls['estado'].errors.required">
+                  Estado es requerido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Datos Estudiante -->
+        <div class="row" *ngIf="estudiante">
+          <div class="mt-4">
+            <h4>Datos Estudiante</h4>
+          </div>
+          <div class="mb-3 col-6">
+            <label class="form-label">Semestre</label>
+            <input type="number" class="form-control" formControlName="semestre" id="semestre"
+              [class.is-invalid]="user.get('semestre').invalid && user.get('semestre').touched" placeholder="Ingrese semestre">
+            <div class="error-msg" *ngIf="user.controls['semestre'].invalid && user.controls['semestre'].touched">
+              <div *ngIf="user.controls['semestre'].errors.required">
+                Semestre es requerido.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Fecha vinculacion</label>
+            <input type="date" class="form-control" formControlName="fecha_vinculacion" id="fecha_vinculacion"
+              [class.is-invalid]="user.get('fecha_vinculacion').invalid && user.get('fecha_vinculacion').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['fecha_vinculacion'].invalid && user.controls['fecha_vinculacion'].touched">
+              <div *ngIf="user.controls['fecha_vinculacion'].errors.required">
+                Fecha de vinculacion es requerida.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Datos coordinador -->
+        <div class="row" *ngIf="!estudiante">
+          <div class="mt-4">
+            <h4>Datos Coordinador</h4>
+          </div>
+          <div class="mb-3 col-6">
+            <label class="form-label">Acuerdo nombramiento</label>
+            <input type="text" class="form-control" formControlName="acuerdo_nombramiento" id="acuerdo_nombramiento"
+              [class.is-invalid]="user.get('acuerdo_nombramiento').invalid && user.get('acuerdo_nombramiento').touched" placeholder="Ingrese acuerdo">
+            <div class="error-msg"
+              *ngIf="user.controls['acuerdo_nombramiento'].invalid && user.controls['acuerdo_nombramiento'].touched">
+              <div *ngIf="user.controls['acuerdo_nombramiento'].errors.required">
+                Acuerdo nombramiento es requerido.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 col-6">
+            <label class="form-label">Fecha vinculacion</label>
+            <input type="date" class="form-control" formControlName="fecha_vinculacion" id="fecha_vinculacion"
+              [class.is-invalid]="user.get('fecha_vinculacion').invalid && user.get('fecha_vinculacion').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['fecha_vinculacion'].invalid && user.controls['fecha_vinculacion'].touched">
+              <div *ngIf="user.controls['fecha_vinculacion'].errors.required">
+                Fecha vinculacion es requerida.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-12">
+            <label class="form-label">Archivo nombramiento</label>
+            <input type="file" class="form-control" formControlName="archivo_nombramiento" id="archivo_nombramiento"
+              [class.is-invalid]="user.get('archivo_nombramiento').invalid && user.get('archivo_nombramiento').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['archivo_nombramiento'].invalid && user.controls['archivo_nombramiento'].touched">
+              <div *ngIf="user.controls['archivo_nombramiento'].errors.required">
+                Archivo nombramiento es requerido.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="container mt-4">
+          <div class="justify-content">
+            <button type="submit" class="btn btn-primary px-5" style="margin-right: 10px;" [disabled]="user.invalid"
+              *ngIf="status != 'view'">Guardar</button>
+            <button type="button" class="card-link btn btn-warning" style="margin-right: 10px;"
+              (click)="cancel()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>

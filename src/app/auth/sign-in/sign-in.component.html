@@ -1,0 +1,87 @@
+<div class="bg-login">
+	<!--wrapper-->
+	<div class="wrapper">
+		<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+			<div class="container-fluid">
+				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+					<div class="col mx-auto">
+						<div class="mb-4 text-center">
+							<div>
+								<h1 class="logo-text" style="font-size: 30px;">Semilleros de Investigación</h1>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<div class="border p-4 rounded">
+									<div class="text-center">
+										<h3 class="">Inicio de sesión</h3>
+										<!-- <p>Aun no tienes una cuenta? <a href="JavaScript:;" (click)="onSignup()">Creala aqui</a></p> -->
+									</div>
+
+									<div class="login-separater text-center mb-4">
+										<hr />
+									</div>
+									<div class="form-body">
+										<form class="row g-3" [formGroup]="userLogin" (submit)="login()">
+											<div class="col-12">
+												<label for="inputEmailAddress" class="form-label">Correo</label>
+												<input [class.is-invalid]="userLogin.get('email').invalid && userLogin.get('email').touched"
+													type="email" class="form-control" id="inputEmailAddress" placeholder="Ingrese correo"
+													formControlName="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+												<div class="error-msg"
+													*ngIf="(userLogin.controls['email'].invalid && userLogin.controls['email'].touched) || userLogin.controls['email'].dirty">
+													<div *ngIf="userLogin.controls['email'].errors?.required">
+														Correo es requerido.
+													</div>
+													<span *ngIf="userLogin.controls['email'].errors?.pattern" class="text-danger">EL formato del
+														correo no es valido</span>
+												</div>
+											</div>
+											<div class="col-12">
+												<label for="inputChoosePassword" class="form-label">Contraseña</label>
+												<div class="input-group" id="show_hide_password">
+													<input type="password" class="form-control border-end-0" id="inputChoosePassword"
+														formControlName="password" id="password"
+														[class.is-invalid]="userLogin.get('password').invalid && userLogin.get('password').touched"
+														placeholder="Ingrese contraseña"> <a href="#" (click)="$event.preventDefault()"
+														class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+												</div>
+												<div class="error-msg"
+													*ngIf="userLogin.controls['password'].invalid && userLogin.controls['password'].touched">
+													<div *ngIf="userLogin.controls['password'].errors.required">
+														Contraseña es requerida.
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+													<label class="form-check-label" for="flexSwitchCheckChecked">Recordarme</label>
+												</div>
+
+											</div>
+											<div class="col-md-6 text-end"> <a href="JavaScript:;" (click)="onForgotpassword()">Olvide la
+													contraseña</a>
+											</div>
+											<div class="col-12">
+												<div class="d-grid">
+													<button type="submit" [disabled]="userLogin.invalid" class="btn btn-primary"><i
+															class="bx bxs-lock-open"></i>Iniciar
+														sesión</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end row-->
+			</div>
+		</div>
+	</div>
+	<!--end wrapper-->
+</div>
+
+<p-toast></p-toast>

@@ -1,0 +1,26 @@
+.justify-content{
+  justify-content: center;
+  display: flex;
+}
+
+.btn-status {
+  margin: 0 13px;
+}
+
+.error-msg {
+  color: red;
+  font-size: 11px;
+  margin-left: 5px;
+}
+
+:host ::ng-deep .p-dropdown-clearable {
+  height: 39px;
+}
+
+:host ::ng-deep .p-dropdown-label {
+  bottom: 7px;
+  position: relative;
+}
+:host ::ng-deep .p-ripple {
+  height: 39px;
+}
