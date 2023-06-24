@@ -1,0 +1,174 @@
+<div>
+  <div>
+    <div class="card-body">
+      <form [formGroup]="user" (submit)="save()">
+        <div class="mt-4">
+          <h4>{{title}}</h4>
+        </div>
+        <div class="row mt-4">
+          <div class="mb-3 col-4">
+            <label class="form-label">Código</label>
+            <input [class.is-invalid]="user.get('codigo').invalid && user.get('codigo').touched" type="text"
+              class="form-control" formControlName="codigo" id="codigo" placeholder="Ingrese Código">
+            <span class="error-msg" *ngIf="user.controls['codigo'].invalid && user.controls['codigo'].touched">
+              Código es requerido.
+            </span>
+          </div>
+
+          <div class="mb-3 col-4">
+            <label class="form-label">Tipo</label>
+            <div>
+              <div>
+                <p-dropdown [options]="lists" [(ngModel)]="selected" optionLabel="name" [showClear]="true"
+                  placeholder="Seleccionar tipo" formControlName="tipo" id="tipo" style="width: 100%; display: grid;"
+                  [class.is-invalid]="user.get('tipo').invalid && user.get('tipo').touched">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2" *ngIf="selected">
+                      <div>{{ selected.name }}</div>
+                    </div>
+                  </ng-template>
+                  <ng-template let-list pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                      <div>{{ list.name }}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+                <div class="error-msg" *ngIf="user.controls['tipo'].invalid && user.controls['tipo'].touched">
+                  <div *ngIf="user.controls['tipo'].errors.required">
+                    Género es requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-4" style="text-align: center;">
+            <label class="form-label">Estado</label>
+            <div>
+              <div>
+                <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
+                  formControlName="estado" id="estado"></p-selectButton>
+              </div>
+              <div class="error-msg" *ngIf="user.controls['estado'].invalid && user.controls['estado'].touched">
+                <div *ngIf="user.controls['estado'].errors.required">
+                  Estado es requerido
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Título</label>
+            <input [class.is-invalid]="user.get('titulo').invalid && user.get('titulo').touched" type="text"
+              class="form-control" formControlName="titulo" id="titulo" placeholder="Ingrese Título">
+            <span class="error-msg" *ngIf="user.controls['titulo'].invalid && user.controls['titulo'].touched">
+              Título es requerida.
+            </span>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Semillero</label>
+            <div>
+              <div>
+                <p-dropdown [options]="listsS" [(ngModel)]="selectedS" optionLabel="name" [showClear]="true"
+                  placeholder="Seleccionar semillero" formControlName="semillero" id="semillero"
+                  style="width: 100%; display: grid;"
+                  [class.is-invalid]="user.get('semillero').invalid && user.get('semillero').touched">
+                  <ng-template pTemplate="selectedItem">
+                    <div class="flex align-items-center gap-2" *ngIf="selectedS">
+                      <div>{{ selectedS.name }}</div>
+                    </div>
+                  </ng-template>
+                  <ng-template let-list pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                      <div>{{ list.name }}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+                <div class="error-msg" *ngIf="user.controls['semillero'].invalid && user.controls['semillero'].touched">
+                  <div *ngIf="user.controls['semillero'].errors.required">
+                    Género es requerido.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Fecha Inicio</label>
+            <input type="date" class="form-control" formControlName="fecha_inicio" id="fecha_inicio"
+              [class.is-invalid]="user.get('fecha_inicio').invalid && user.get('fecha_inicio').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['fecha_inicio'].invalid && user.controls['fecha_inicio'].touched">
+              <div *ngIf="user.controls['fecha_inicio'].errors.required">
+                Fecha de Inicio es requerida
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Fecha Fin</label>
+            <input type="date" class="form-control" formControlName="fecha_fin" id="fecha_fin"
+              [class.is-invalid]="user.get('fecha_fin').invalid && user.get('fecha_fin').touched">
+            <div class="error-msg" *ngIf="user.controls['fecha_fin'].invalid && user.controls['fecha_fin'].touched">
+              <div *ngIf="user.controls['fecha_fin'].errors.required">
+                Fecha de Finalización es requerida
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Archivo Propuesta</label>
+            <input accept="application/pdf" alife-file-to-base64 (onFileChanged)="onChangeAP($event)" *ngIf="status != 'view'" type="file"
+              class="form-control" formControlName="archivo_propuesta" id="archivo_propuesta"
+              [class.is-invalid]="user.get('archivo_propuesta').invalid && user.get('archivo_propuesta').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['archivo_propuesta'].invalid && user.controls['archivo_propuesta'].touched">
+              <div *ngIf="user.controls['archivo_propuesta'].errors.required">
+                Archivo Propuesta es requerido.
+              </div>
+            </div>
+            <div class="mt-4">
+              <pdf-viewer *ngIf="aPropuesta" [src]="aPropuesta" [rotation]="0" [original-size]="false" [show-all]="true"
+                [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false"
+                [render-text]="false" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="true"
+                style="width: 100%; height: 400px;"></pdf-viewer>
+            </div>
+          </div>
+
+          <div class="mb-3 col-6">
+            <label class="form-label">Archivo proyecto final</label>
+            <input accept="application/pdf" alife-file-to-base64 (onFileChanged)="onChangeAF($event)" *ngIf="status != 'view'" type="file"
+              class="form-control" formControlName="archivo_proyecto_final" id="archivo_proyecto_final"
+              [class.is-invalid]="user.get('archivo_proyecto_final').invalid && user.get('archivo_proyecto_final').touched">
+            <div class="error-msg"
+              *ngIf="user.controls['archivo_proyecto_final'].invalid && user.controls['archivo_proyecto_final'].touched">
+              <div *ngIf="user.controls['archivo_proyecto_final'].errors.required">
+                Archivo proyecto final es requerido.
+              </div>
+            </div>
+            <div class="mt-4">
+              <pdf-viewer *ngIf="aFinal" [src]="aFinal" [rotation]="0" [original-size]="false" [show-all]="true"
+                [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false"
+                [render-text]="false" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="true"
+                style="width: 100%; height: 400px;"></pdf-viewer>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="container mt-4">
+          <div class="justify-content">
+            <button type="submit" class="btn btn-primary px-5" style="margin-right: 10px;" [disabled]="user.invalid"
+              *ngIf="status != 'view'">Guardar</button>
+
+            <button type="button" class="card-link btn btn-warning" style="margin-right: 10px;"
+              (click)="cancel()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

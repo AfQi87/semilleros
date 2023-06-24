@@ -16,10 +16,18 @@ import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToastModule } from 'primeng/toast';
+import { SemilleroGestionComponent } from './semillero/semillero-gestion/semillero-gestion.component';
+import { SemilleroQueryComponent } from './semillero/semillero-query/semillero-query.component';
+import { AlifeFileToBase64Module } from 'alife-file-to-base64';
+import { ProjectGestionComponent } from './project/project-gestion/project-gestion.component';
+import { ProjectQueryComponent } from './project/project-query/project-query.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 
 @NgModule({
   declarations: [
-     UserGestionComponent, UserQueryComponent
+     UserGestionComponent, UserQueryComponent, SemilleroGestionComponent, SemilleroQueryComponent, ProjectGestionComponent, ProjectQueryComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +42,10 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     FormsModule,
     SelectButtonModule,
-    ToastModule
+    ToastModule,
+    AlifeFileToBase64Module,
+    PdfViewerModule,
+    MultiSelectModule,
   ]
 })
 export class DashboardModule { }

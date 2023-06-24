@@ -1,0 +1,149 @@
+<div>
+  <div>
+    <div class="card-body">
+      <form [formGroup]="user" (submit)="save()">
+        <div class="mt-4">
+          <h4>{{title}}</h4>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-3 col-12">
+              <label class="form-label">Nombre</label>
+              <input [class.is-invalid]="user.get('nombre').invalid && user.get('nombre').touched" type="text"
+                class="form-control" formControlName="nombre" id="nombre" placeholder="Ingrese Nombre">
+              <span class="error-msg" *ngIf="user.controls['nombre'].invalid && user.controls['nombre'].touched">
+                Identificación es requerida.
+              </span>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Correo</label>
+              <input type="email" class="form-control"
+                [class.is-invalid]="user.get('correo').invalid && user.get('correo').touched" formControlName="correo"
+                id="correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Ingrese correo">
+              <div class="error-msg" *ngIf="user.controls['correo'].invalid && user.controls['correo'].touched">
+                <div *ngIf="user.controls['correo'].errors?.required">
+                  Correo es requerido.
+                </div>
+                <span *ngIf="user.controls['correo'].errors?.pattern" class="text-danger">EL formato del
+                  correo no es valido</span>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Fecha resolución</label>
+              <input type="date" class="form-control" formControlName="fecha_resolucion" id="fecha_resolucion"
+                [class.is-invalid]="user.get('fecha_resolucion').invalid && user.get('fecha_resolucion').touched">
+              <div class="error-msg"
+                *ngIf="user.controls['fecha_resolucion'].invalid && user.controls['fecha_resolucion'].touched">
+                <div *ngIf="user.controls['fecha_resolucion'].errors.required">
+                  Fecha de resolución es requerida
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Número resolución</label>
+              <input type="number" class="form-control" formControlName="numero" id="numero"
+                [class.is-invalid]="user.get('numero').invalid && user.get('numero').touched"
+                placeholder="Ingrese Número">
+              <div class="error-msg" *ngIf="user.controls['numero'].invalid && user.controls['numero'].touched">
+                <div *ngIf="user.controls['numero'].errors.required">
+                  Número es requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Archivo resolución</label>
+              <input accept="application/pdf" type="file" class="form-control" formControlName="archivo_resolucion" id="archivo_resolucion"
+                *ngIf="status != 'view'" alife-file-to-base64 (onFileChanged)="onChangeR($event)"
+                [class.is-invalid]="user.get('archivo_resolucion').invalid && user.get('archivo_resolucion').touched">
+              <div class="error-msg"
+                *ngIf="user.controls['archivo_resolucion'].invalid && user.controls['archivo_resolucion'].touched">
+                <div *ngIf="user.controls['archivo_resolucion'].errors.required">
+                  Archivo resolución es requerido.
+                </div>
+              </div>
+              <div class="mt-4">
+                <pdf-viewer *ngIf="aResolucion" [src]="aResolucion" [rotation]="0" [original-size]="false"
+                  [show-all]="true" [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false"
+                  [render-text]="false" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="true"
+                  style="width: 100%; height: 400px;"></pdf-viewer>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-6">
+            <div class="mb-3 col-12">
+              <label class="form-label">Estado</label>
+              <div>
+                <div>
+                  <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"
+                    formControlName="estado" id="estado"></p-selectButton>
+                </div>
+                <div class="error-msg" *ngIf="user.controls['estado'].invalid && user.controls['estado'].touched">
+                  <div *ngIf="user.controls['estado'].errors.required">
+                    Estado es requerido
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Lineas de investigación</label>
+              <div>
+                <div>
+                  <p-multiSelect [options]="lists" [(ngModel)]="selected"
+                    defaultLabel="Seleccione las lineas de investigación" optionLabel="name" display="chip"
+                    formControlName="linea" id="linea" style="width: 100%; display: grid;"
+                    [class.is-invalid]="user.get('linea').invalid && user.get('linea').touched"></p-multiSelect>
+                  <div class="error-msg" *ngIf="user.controls['linea'].invalid && user.controls['linea'].touched">
+                    <div *ngIf="user.controls['linea'].errors.required">
+                      Linea es requerida.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" formControlName="descripcion" id="descripcion"
+              [class.is-invalid]="user.get('descripcion').invalid && user.get('descripcion').touched"
+              placeholder="Ingrese Descripción" cols="10" rows="4"></textarea>
+              <div class="error-msg"
+                *ngIf="user.controls['descripcion'].invalid && user.controls['descripcion'].touched">
+                <div *ngIf="user.controls['descripcion'].errors.required">
+                  Descripción es requerida.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3 col-12">
+              <label class="form-label">Logo</label>
+              <input accept="image/*" type="file" class="form-control" formControlName="logo" id="logo"
+                [class.is-invalid]="user.get('logo').invalid && user.get('logo').touched" alife-file-to-base64
+                (onFileChanged)="onChange($event)" *ngIf="status != 'view'">
+              <img *ngIf="img" [src]="img" height="200" alt="" class="img-logo {{status != 'view' ? '' : 'h-logo'}}">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="container mt-4">
+          <div class="justify-content">
+            <button type="submit" class="btn btn-primary px-5" style="margin-right: 10px;" [disabled]="user.invalid"
+              *ngIf="status != 'view'">Guardar</button>
+
+            <button type="button" class="card-link btn btn-warning" style="margin-right: 10px;"
+              (click)="cancel()">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

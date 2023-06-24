@@ -49,5 +49,13 @@ module.exports = sequelize => {
     schema: 'public'
   };
   const LineasSemillerosModel = sequelize.define("lineas_semilleros_model", attributes, options);
+
+  LineasSemillerosModel.associate = function (models) {
+    LineasSemillerosModel.belongsTo(models.linea_investigacions_model, {
+      foreignKey: 'linea_investigacion_id',
+      as: "lineaInvestigacion"
+    });
+  };
+
   return LineasSemillerosModel;
 };

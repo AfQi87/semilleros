@@ -116,5 +116,20 @@ module.exports = sequelize => {
     schema: 'public'
   };
   const ProyectosModel = sequelize.define("proyectos_model", attributes, options);
+
+  ProyectosModel.associate = function (models) {
+    ProyectosModel.belongsTo(models.estado_proyectos_model, {
+      foreignKey: 'estado_proyecto_id',
+      as: "estado"
+    });
+    ProyectosModel.belongsTo(models.tipo_proyectos_model, {
+      foreignKey: 'tipo_proyecto_id',
+      as: "tipo"
+    });
+    ProyectosModel.belongsTo(models.semilleros_model, {
+      foreignKey: 'semillero_id',
+      as: "semillero"
+    });
+  };
   return ProyectosModel;
 };

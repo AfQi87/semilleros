@@ -55,7 +55,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: [
       {
-        path: '/dashboard/employs',
+        path: '/dashboard/semilleros',
         title: 'Semilleros',
         icon: 'bx bxright-arrow-alt',
         class: '',
@@ -86,7 +86,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: [
       {
-        path: '/dashboard/employs',
+        path: '/dashboard/project',
         title: 'Proyectos',
         icon: 'bx bxright-arrow-alt',
         class: '',

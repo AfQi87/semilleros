@@ -87,6 +87,19 @@ module.exports = sequelize => {
         key: "id",
         model: "coordinadors_model"
       }
+    },
+    estado_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      comment: null,
+      primaryKey: false,
+      field: "estado_id",
+      autoIncrement: false,
+      references: {
+        key: "id",
+        model: "estado_usuarios_model"
+      }
     }
   };
   const options = {
@@ -99,5 +112,21 @@ module.exports = sequelize => {
     schema: 'public'
   };
   const SemillerosModel = sequelize.define("semilleros_model", attributes, options);
+
+  SemillerosModel.associate = function (models) {
+    SemillerosModel.belongsTo(models.coordinadors_model, {
+      foreignKey: 'coordinador_id',
+      as: "coordinador"
+    });
+    SemillerosModel.belongsTo(models.estado_usuarios_model, {
+      foreignKey: 'estado_id',
+      as: "estado"
+    });
+    SemillerosModel.hasMany(models.lineas_semilleros_model, {
+      foreignKey: 'semillero_id',
+      as: "linea"
+    });
+  };
+
   return SemillerosModel;
 };
